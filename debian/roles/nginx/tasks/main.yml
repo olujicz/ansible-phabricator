@@ -1,0 +1,11 @@
+---
+- name: Install nginx
+  apt:
+    pkg: nginx
+    state: present
+
+- name: Copy nginx config
+  template:
+    src: phabricator.conf
+    dest: /etc/nginx/sites-enabled/{{ domain }}.conf
+  notify: restart nginx
