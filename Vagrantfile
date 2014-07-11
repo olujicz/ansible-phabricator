@@ -1,24 +1,22 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.configure("2") do |config|
-  config.vm.box = "debian-7.5.0-x86_64"
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "lugons"
   config.vm.box_url = "ftp://ftp.lugons.org/vagrant/debian-7.5.0-x86_64.box"
-
-  config.vm.define :phabricator, primary: true do |phabricator|
-    phabricator.vm.network :private_network, ip: "192.168.33.15"
-
-    phabricator.vm.provider :virtualbox do |v|
-    v.name = "phabricator"
-    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    v.customize ["modifyvm", :id, "--memory", 512]
-    v.customize ["modifyvm", :id, "--cpus", 1]
-    v.customize ["modifyvm", :id, "--name", "Phabricator"]
-    end
-
-    phabricator.vm.provision :ansible do |ansible|
-      ansible.inventory_path = "debian/hosts"
-      ansible.playbook = "debian/site.yml"
-    end
+  config.vm.network :private_network, ip: "192.168.33.15"
+  config.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "phabricator"
+      virtualbox.customize ["modifyvm", :id, "--memory", 512]
+  end
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "provision/site.yml"
+    ansible.host_key_checking = false
+    ansible.groups = {
+      "vm" => ["default"],
+    }
   end
 end

@@ -1,10 +1,12 @@
 ---
 - name: Install nginx
+  sudo: yes
   apt:
     pkg: nginx
     state: present
 
 - name: Copy nginx config
+  sudo: yes
   template:
     src: phabricator.conf
     dest: /etc/nginx/sites-enabled/{{ domain }}.conf
