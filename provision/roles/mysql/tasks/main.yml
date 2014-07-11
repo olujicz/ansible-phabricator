@@ -1,5 +1,6 @@
 ---
 - name: Install MySQL package
+  sudo: yes
   apt:
     pkg: "{{ item }}"
     state: present
@@ -7,6 +8,7 @@
    - mysql-server
 
 - name: Create MySQL configuration file
+  sudo: yes
   template:
     src: my.cnf
     dest: /etc/my.cnf
@@ -14,6 +16,7 @@
   - restart mysql
 
 - name: Start MySQL Service
+  sudo: yes
   service:
     name: mysql
     state: started

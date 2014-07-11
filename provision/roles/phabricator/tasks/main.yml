@@ -1,0 +1,53 @@
+---
+- name: Clone libphutil
+  sudo: yes
+  git:
+    repo: https://github.com/facebook/libphutil
+    dest: /srv/www/libphutil
+
+- name: Clone arcanist
+  sudo: yes
+  git:
+    repo: https://github.com/facebook/arcanist
+    dest: /srv/www/arcanist
+
+- name: Clone phabricator
+  sudo: yes
+  git:
+    repo: https://github.com/facebook/phabricator
+    dest: "{{ phabricator_path }}"
+
+- name: Place phabricator config
+  sudo: yes
+  template:
+    src: myconfig.conf.php
+    dest: "{{ phabricator_path }}conf/default.conf.php"
+
+- name: Migrate the database
+  sudo: yes
+  command: chdir={{ phabricator_path }} ./bin/storage upgrade --force
+
+- name: Start phabricator daemons
+  sudo: yes
+  command: chdir={{ phabricator_path }} ./bin/phd start
+  ignore_errors: yes
+
+- name: Create the repository directory
+  sudo: yes
+  file:
+    path: "{{ repositories_path }}"
+    state: directory
+
+- name: add user phabricatord
+  sudo: yes
+  user:
+    name: phabricatord
+    password: "$6$.nd53PkO$GuYKTpQQjtc.S35Rrp3xU1x0SetDU8nCDnT.0CMjuiqr6kiotkYeDkZHtE799qPxMHJeTf/Y9IHy7RRHmRhia/"
+    update_password: always
+
+- name: add user git
+  sudo: yes
+  user:
+    name: git
+    password: "NP"
+    update_password: always

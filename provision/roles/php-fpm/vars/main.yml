@@ -1,0 +1,10 @@
+php_packages:
+  - name: php5
+  - name: php5-fpm
+  - name: php5-mysql
+  - name: php5-gd
+  - name: php-apc
+  - name: php5-curl
+  - name: php5-cli
+  - name: php5-json
+

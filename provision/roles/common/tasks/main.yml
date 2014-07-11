@@ -1,20 +1,24 @@
 ---
 - name: Update apt cache
+  sudo: yes
   apt:
     update_cache: yes
 
 - name: Update all packages to the latest version
+  sudo: yes
   apt:
     upgrade: dist
 
 - name: Install dependency
+  sudo: yes
   apt:
     pkg: "{{ item }}"
-    state: installed
+    state: latest
   with_items:
     - git
 
 - name: Add alias to 127.0.0.1 to /etc/hosts
+  sudo: yes
   lineinfile:
     dest: /etc/hosts
     regexp: "^127.0.0.1 {{ domain }}"
