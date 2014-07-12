@@ -2,19 +2,19 @@
 - name: Clone libphutil
   sudo: yes
   git:
-    repo: https://github.com/facebook/libphutil
+    repo: https://github.com/phacility/libphutil
     dest: /srv/www/libphutil
 
 - name: Clone arcanist
   sudo: yes
   git:
-    repo: https://github.com/facebook/arcanist
+    repo: https://github.com/phacility/arcanist
     dest: /srv/www/arcanist
 
 - name: Clone phabricator
   sudo: yes
   git:
-    repo: https://github.com/facebook/phabricator
+    repo: https://github.com/phacility/phabricator
     dest: "{{ phabricator_path }}"
 
 - name: Place phabricator config
