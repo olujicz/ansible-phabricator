@@ -1,0 +1,48 @@
+#! /bin/sh
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+DESC="phabricator daemons"
+NAME=phd
+DAEMON=/srv/www/phabricator/bin/$NAME
+DAEMON_ARGS="--options args"
+SCRIPTNAME=/etc/init.d/$NAME
+USER=phabricatord
+
+# Exit if the package is not installed
+# [ -x "$DAEMON" ] || exit 0
+
+[ -r /etc/default/$NAME ] && . /etc/default/$NAME
+
+. /lib/init/vars.sh
+
+. /lib/lsb/init-functions
+
+do_start()
+{
+    su - $USER -c "$DAEMON start"
+}
+
+do_stop()
+{
+    su - $USER -c "$DAEMON stop"
+}
+
+case "$1" in
+  start)
+	[ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
+	do_start
+	;;
+  stop)
+	[ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
+	do_stop
+	;;
+  status)
+	su - $USER -c "$DAEMON status"
+	;;
+  restart|force-reload)
+    su - $USER -c "$DAEMON restart"
+	;;
+  *)
+	echo "Usage: $SCRIPTNAME {start|stop|status|restart}" >&2
+	exit 3
+	;;
+esac

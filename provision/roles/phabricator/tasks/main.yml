@@ -54,12 +54,6 @@
   sudo_user: phabricatord
   command: chdir={{ phabricator_path }} ./bin/storage upgrade --force
 
-- name: Start phabricator daemons
-  sudo: yes
-  sudo_user: phabricatord
-  command: chdir={{ phabricator_path }} ./bin/phd start
-  ignore_errors: yes
-
 - name: Create the repository directory
   sudo: yes
   file:
@@ -67,3 +61,19 @@
     owner: phabricatord
     group: phabricatord
     state: directory
+
+- name: copy phd init script
+  sudo: yes
+  copy:
+    src: phd
+    dest: /etc/init.d/phd
+    owner: root
+    group: root
+    mode: 0744
+
+- name: run phd and enable autostart
+  sudo: yes
+  service:
+    name: phd
+    state: started
+    enabled: yes
