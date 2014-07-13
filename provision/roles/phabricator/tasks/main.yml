@@ -1,43 +1,4 @@
 ---
-- name: Clone libphutil
-  sudo: yes
-  git:
-    repo: https://github.com/phacility/libphutil
-    dest: /srv/www/libphutil
-
-- name: Clone arcanist
-  sudo: yes
-  git:
-    repo: https://github.com/phacility/arcanist
-    dest: /srv/www/arcanist
-
-- name: Clone phabricator
-  sudo: yes
-  git:
-    repo: https://github.com/phacility/phabricator
-    dest: "{{ phabricator_path }}"
-
-- name: Place phabricator config
-  sudo: yes
-  template:
-    src: myconfig.conf.php
-    dest: "{{ phabricator_path }}conf/default.conf.php"
-
-- name: Migrate the database
-  sudo: yes
-  command: chdir={{ phabricator_path }} ./bin/storage upgrade --force
-
-- name: Start phabricator daemons
-  sudo: yes
-  command: chdir={{ phabricator_path }} ./bin/phd start
-  ignore_errors: yes
-
-- name: Create the repository directory
-  sudo: yes
-  file:
-    path: "{{ repositories_path }}"
-    state: directory
-
 - name: add user phabricatord
   sudo: yes
   user:
@@ -51,3 +12,58 @@
     name: git
     password: "NP"
     update_password: always
+
+- name: Clone libphutil
+  sudo: yes
+  git:
+    repo: https://github.com/phacility/libphutil
+    dest: /srv/www/libphutil
+    depth: 1
+
+- name: Clone arcanist
+  sudo: yes
+  git:
+    repo: https://github.com/phacility/arcanist
+    dest: /srv/www/arcanist
+    depth: 1
+
+- name: set /srv/www permissions
+  sudo: yes
+  file:
+    path: /srv/www
+    group: phabricatord
+    mode: 0775
+
+- name: Clone phabricator
+  sudo: yes
+  sudo_user: phabricatord
+  git:
+    repo: https://github.com/phacility/phabricator
+    dest: "{{ phabricator_path }}"
+    depth: 1
+
+- name: Place phabricator config
+  sudo: yes
+  sudo_user: phabricatord
+  template:
+    src: myconfig.conf.php
+    dest: "{{ phabricator_path }}conf/default.conf.php"
+
+- name: Migrate the database
+  sudo: yes
+  sudo_user: phabricatord
+  command: chdir={{ phabricator_path }} ./bin/storage upgrade --force
+
+- name: Start phabricator daemons
+  sudo: yes
+  sudo_user: phabricatord
+  command: chdir={{ phabricator_path }} ./bin/phd start
+  ignore_errors: yes
+
+- name: Create the repository directory
+  sudo: yes
+  file:
+    path: "{{ repositories_path }}"
+    owner: phabricatord
+    group: phabricatord
+    state: directory

@@ -4,10 +4,20 @@
   apt:
     pkg: nginx
     state: present
+  notify:
+    - restart nginx
 
 - name: Copy nginx config
   sudo: yes
   template:
     src: phabricator.conf
     dest: /etc/nginx/sites-enabled/{{ domain }}.conf
-  notify: restart nginx
+  notify:
+    - restart nginx
+
+- name: ensure nginx is enabled
+  sudo: yes
+  service:
+    name: nginx
+    enabled: yes
+    state: running
