@@ -1,0 +1,5 @@
+apt_preferences:
+  - name: stable
+    priority: 995
+  - name: testing
+    priority: 750

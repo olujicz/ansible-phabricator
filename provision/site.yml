@@ -2,6 +2,10 @@
 - name: Phabricator installer with NGINX, PHP-FPM, MySQL, GIT
   hosts: all
 
+  pre_tasks:
+    - include: roles/common/pre_tasks/main.yml
+    # - include: roles/openssh/pre_tasks/main.yml
+
   roles:
     - common
     - nginx

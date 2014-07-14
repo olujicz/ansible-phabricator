@@ -1,0 +1,6 @@
+- name: add testing repository
+  sudo: yes
+  apt_repository:
+    repo: "deb http://ftp.us.debian.org/debian/ testing main"
+    state: present
+
