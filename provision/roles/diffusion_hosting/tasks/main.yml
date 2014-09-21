@@ -32,11 +32,11 @@
     group: root
     mode: 0755
 
-- name: configure sshd_config.phabricator
+- name: configure sshd_config
   sudo: yes
   template:
-    src: sshd_config.phabricator
-    dest: /etc/ssh/sshd_config.phabricator
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
     owner: root
     group: root
 
