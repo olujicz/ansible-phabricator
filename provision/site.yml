@@ -13,3 +13,4 @@
     - mysql
     - openssh
     - phabricator
+    - diffusion_hosting
