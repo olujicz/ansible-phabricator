@@ -1,3 +1,7 @@
-Package: *
+Package: openssh-server
+Pin: release a={{ item.name }}
+Pin-Priority: {{ item.priority }}
+
+Package: openssh-client
 Pin: release a={{ item.name }}
 Pin-Priority: {{ item.priority }}

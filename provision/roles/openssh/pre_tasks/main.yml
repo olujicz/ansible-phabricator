@@ -1,6 +1,6 @@
-- name: add testing repository
+- name: add backports repository
   sudo: yes
   apt_repository:
-    repo: "deb http://ftp.us.debian.org/debian/ testing main"
+    repo: "deb http://ftp.us.debian.org/debian/ wheezy-backports main"
     state: present
 

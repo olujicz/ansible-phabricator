@@ -4,11 +4,12 @@
 
   pre_tasks:
     - include: roles/common/pre_tasks/main.yml
-    # - include: roles/openssh/pre_tasks/main.yml
+    - include: roles/openssh/pre_tasks/main.yml
 
   roles:
     - common
     - nginx
     - php-fpm
     - mysql
+    - openssh
     - phabricator

@@ -1,0 +1,6 @@
+- name: install openssh-server
+  sudo: yes
+  apt:
+    pkg: openssh-server
+    default_release: wheezy-backports
+    state: latest
