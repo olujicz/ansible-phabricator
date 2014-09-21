@@ -39,6 +39,8 @@
     dest: /etc/ssh/sshd_config
     owner: root
     group: root
+  notify:
+    - restart ssh
 
 - name: set phd.user
   sudo: yes

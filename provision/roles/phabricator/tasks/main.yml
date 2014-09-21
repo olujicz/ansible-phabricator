@@ -64,12 +64,12 @@
 
 - name: copy phd init script
   sudo: yes
-  copy:
-    src: phd
+  template:
+    src: phd.j2
     dest: /etc/init.d/phd
     owner: root
     group: root
-    mode: 0744
+    mode: 0755
 
 - name: run phd and enable autostart
   sudo: yes

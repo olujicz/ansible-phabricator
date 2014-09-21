@@ -1,0 +1,6 @@
+- name: restart ssh
+  sudo: yes
+  service:
+    name: ssh
+    enabled: yes
+    state: restarted
