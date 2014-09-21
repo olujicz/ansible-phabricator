@@ -8,7 +8,7 @@ ROOT="{{ phabricator_path }}"
 
 if [ "$1" != "$VCSUSER" ];
 then
-  exit 1
+    exec cat ~$1/.ssh/authorized_keys
 fi
 
 exec "$ROOT/bin/ssh-auth" $@
