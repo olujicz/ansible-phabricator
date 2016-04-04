@@ -1,5 +1,5 @@
-apt_preferences:
-  # - name: stable
-  #   priority: 995
-  - name: wheezy-backports
-    priority: 999
+# apt_preferences:
+#   # - name: stable
+#   #   priority: 995
+#   - name: wheezy-backports
+#     priority: 999
