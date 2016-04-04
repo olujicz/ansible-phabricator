@@ -1,6 +1,6 @@
 # phabricator-ansible
 
-Ansible playbooks for Phabricator installations with Vagrant on Debian 7
+Ansible playbooks for Phabricator installations with Vagrant on Debian 8
 
 ## Installing
 
