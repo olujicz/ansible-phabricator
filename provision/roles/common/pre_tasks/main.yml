@@ -9,12 +9,3 @@
   apt:
     pkg: python-pycurl
     state: latest
-
-- name: configure repository preferences
-  sudo: yes
-  with_items: apt_preferences
-  template:
-    src: preferences.pref.j2
-    dest: "/etc/apt/preferences.d/{{ item.name }}.pref"
-    owner: root
-    group: root

@@ -4,11 +4,6 @@
   apt:
     update_cache: yes
 
-- name: Update all packages to the latest version
-  sudo: yes
-  apt:
-    upgrade: dist
-
 - name: Install dependency
   sudo: yes
   apt:
